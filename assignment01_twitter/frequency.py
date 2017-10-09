@@ -17,8 +17,6 @@ def main():
                 else:
                     word_freq[word]=1
 
-                print("*******", word_freq[word])
-
                 total_words +=1
 
 

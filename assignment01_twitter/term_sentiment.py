@@ -39,7 +39,7 @@ def main():
     for tweet in tweets:
         #print(tweet)
         score = 0
-        words = tweet.split(" ")
+        words = tweet.split()
 
         for word in words:
             if word in afinn_scores:
@@ -63,6 +63,7 @@ def main():
                     neg+=1
 
                 total+=1
+
 
         print(word,":",(pos-neg)/total)
 

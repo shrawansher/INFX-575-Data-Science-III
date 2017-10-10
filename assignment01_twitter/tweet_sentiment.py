@@ -2,7 +2,7 @@ import sys
 import json
 import re
 
-
+# Calculates the sentiment score for a tweet
 def calculate_score(words,afinn_scores):
     score =0
     for word in words:
@@ -11,23 +11,27 @@ def calculate_score(words,afinn_scores):
 
     return score
 
-
+# Creates a word list from a tweet
 def extract_words(tweet):
-    words = tweet.split(" ")
-    return [ word.lower() for word in words if len(word)>1]
+    words = re.split('\W+',tweet)
+    return [ word.lower() for word in words if len(word)>0]
 
 def main():
+    #AFINN file
     sent_file = open(sys.argv[1])
-
+    #Tweet File
     tweet_file = open(sys.argv[2])
 
-    afinn_scores = {}  # initialize an empty dictionary
+    #Dictionary to store afinn scores
+    afinn_scores = {}
 
-
+    #Saves Afinn scores
     for line in sent_file:
-        term, score = line.strip().split("\t")  # The file is tab-delimited. "\t" means "tab character"
-        afinn_scores[term] = int(score)  # Convert the score to an integer.
+        term, score = line.strip().split("\t")
+        afinn_scores[term] = int(score)
+
     sentiment_score =[]
+
 
     for line in tweet_file:
         tweet_line = json.loads(line)
@@ -39,20 +43,16 @@ def main():
 
         #Extract words
             words = extract_words(tweet)
+            #Fetch scores for each tweet
             score = calculate_score(words,afinn_scores)
+
         sentiment_score.append(score)
 
-
-    print(sentiment_score)
-
-
-
-    
+    for score in sentiment_score:
+        print(score)
     
 if __name__ == '__main__':
     main()
-   # afinnfile = open("AFINN-111.txt")
 
-   # tweet_file = open("output.txt")
 
 

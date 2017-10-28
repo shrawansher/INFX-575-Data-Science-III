@@ -17,16 +17,15 @@ def mapper(record):
     value = record[1]
     words = value.split()
     for w in words:
-      mr.emit_intermediate(w, 1)
+      mr.emit_intermediate(w, key)
 
 def reducer(key, list_of_values):
     # key: word
     # value: list of occurrence counts
-    # total = 0
+    # total = []
     # for v in list_of_values:
-    #   total += v
-    total = list(set(list_of_values))
-    mr.emit((key, total))
+    #   total.ap
+    mr.emit((key, list_of_values))
 
 # Do not modify below this line
 # =============================

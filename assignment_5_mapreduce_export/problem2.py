@@ -11,22 +11,30 @@ mr = MapReduce.MapReduce()
 # Do not modify above this line
 
 def mapper(record):
-    # key: document identifier
-    # value: document contents
-    key = record[0]
-    value = record[1]
-    words = value.split()
-    for w in words:
-      mr.emit_intermediate(w, 1)
+    # record[0]: order or line_item
+    # record[1]: order_id
+
+    key = record[1]
+    mr.emit_intermediate(key,record)
+
+
 
 def reducer(key, list_of_values):
     # key: word
     # value: list of occurrence counts
-    # total = 0
+    # total = []
     # for v in list_of_values:
-    #   total += v
-    total = list(set(list_of_values))
-    mr.emit((key, total))
+    #   total.ap
+
+    items = []
+    for value in list_of_values:
+        if value[0] == 'order':
+            order = value
+        elif value[0] == 'line_item':
+            items.append(value)
+    for item in items:
+        mr.emit(order + item)
+
 
 # Do not modify below this line
 # =============================

@@ -20,11 +20,8 @@ def mapper(record):
 
 
 def reducer(key, list_of_values):
-    # key: word
-    # value: list of occurrence counts
-    # total = []
-    # for v in list_of_values:
-    #   total.ap
+    # key: order_id
+    # value: record
 
     items = []
     for value in list_of_values:

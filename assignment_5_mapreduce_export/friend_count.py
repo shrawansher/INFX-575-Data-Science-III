@@ -2,7 +2,7 @@ import MapReduce
 import sys
 
 """
-DNA Trim Example in the Simple Python MapReduce Framework
+Friend Count Example in the Simple Python MapReduce Framework
 """
 
 mr = MapReduce.MapReduce()
@@ -11,17 +11,17 @@ mr = MapReduce.MapReduce()
 # Do not modify above this line
 
 def mapper(record):
-    # key: num of machines
-
-    nucleotides = record[1]
-    key = nucleotides[:10]
-    mr.emit_intermediate(key,1 )
+    # key: friendA
+    key = record[0]
+    mr.emit_intermediate(key, 1)
 
 def reducer(key, list_of_values):
     # key: person
     # value: list of friend counts
-    #total = 0
-    mr.emit(key)
+    total = 0
+    for v in list_of_values:
+      total += v
+    mr.emit((key, total))
 
 # Do not modify below this line
 # =============================

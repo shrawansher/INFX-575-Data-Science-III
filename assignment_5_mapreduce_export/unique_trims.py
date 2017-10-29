@@ -1,10 +1,8 @@
-
-
 import MapReduce
 import sys
 
 """
-Word Count Example in the Simple Python MapReduce Framework
+DNA Trim Example in the Simple Python MapReduce Framework
 """
 
 mr = MapReduce.MapReduce()
@@ -13,17 +11,16 @@ mr = MapReduce.MapReduce()
 # Do not modify above this line
 
 def mapper(record):
-    # key: friendA
-    key = record[0]
-    mr.emit_intermediate(key, 1)
+    # key:nucleotide
+
+    nucleotides = record[1]
+    key = nucleotides[:10]
+    mr.emit_intermediate(key,1 )
 
 def reducer(key, list_of_values):
     # key: person
     # value: list of friend counts
-    total = 0
-    for v in list_of_values:
-      total += v
-    mr.emit((key, total))
+    mr.emit(key)
 
 # Do not modify below this line
 # =============================

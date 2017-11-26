@@ -11,17 +11,18 @@ mr = MapReduce.MapReduce()
 # Do not modify above this line
 
 def mapper(record):
-
-    sorted_record = sorted(record)
-    personA = sorted_record[0]
-    personB = sorted_record[1]
-    mr.emit_intermediate(personA+personB, record)
+    #Key: friend
+    # value: count
+    friendTo = record[0]
+    friendOf = record[1]
+    mr.emit_intermediate((friendTo,friendOf), 1)
+    mr.emit_intermediate((friendOf, friendTo), 1)
 
 def reducer(key, list_of_values):
     # key: person
     # value: list of friend counts
     if len(list_of_values) == 1:
-        print(list_of_values[0])
+        mr.emit(key)
 
 # Do not modify below this line
 # =============================

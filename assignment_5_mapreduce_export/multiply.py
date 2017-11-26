@@ -14,14 +14,11 @@ mr = MapReduce.MapReduce()
 
 N = 5
 
-
 def mapper(record):
-    '''
-    The first item, matrix, is a string that identifies which matrix
-    the record originates from. This field has two possible values:
-    'a' indicates that the record is from matrix A
-    'b' indicates that the record is from matrix B
-    '''
+
+    # Key is row or col  depending on the matrix
+    # Value is the the matrix identifier and the value of the element in the row or col
+
     matrix, row, col, val = record
     if matrix == 'a':
         for n in range(N):
@@ -34,16 +31,14 @@ def mapper(record):
 
 
 def reducer(key, list_of_values):
-    '''
-    The output from the reduce function will also be matrix row records
-    formatted as tuples. Each tuple will have the format (i, j, value)
-    where each element is an integer.
-    '''
-    a_value = [e for e in list_of_values if e[0] == 'a']
-    b_value = [e for e in list_of_values if e[0] == 'b']
+
+    # The reduce function has the format (i, j, value) where each element is an integer.
+
+    a_result = [e for e in list_of_values if e[0] == 'a']
+    b_result = [e for e in list_of_values if e[0] == 'b']
     result = 0
-    for a in a_value:
-        for b in b_value:
+    for a in a_result:
+        for b in b_result:
             if a[1] == b[1]:
                 result += a[2] * b[2]
     mr.emit((key[0], key[1], result))
